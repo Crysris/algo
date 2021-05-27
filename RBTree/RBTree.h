@@ -28,4 +28,7 @@ class RBTree {
   RBNode<T> *root;
 
  public:
+  RBTree();
+  RBTree(T k, RBTCOLOR c);
+  RBTree(RBTree<T> *t);
 };
