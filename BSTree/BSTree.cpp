@@ -1,6 +1,10 @@
 #include "BSTree.h"
 
 template <class T>
+BSTree<T>::BSTree() {
+  root = nullptr;
+}
+template <class T>
 BSTree<T>::~BSTree() {
   destory(root);
 }
@@ -48,7 +52,11 @@ template <class T>
 void BSTree<T>::inOrder() {
   if (root == nullptr) return;
   inOrder(root);
-  
+}
+
+template <class T>
+void BSTree<T>::print() {
+  inOrder();
 }
 template <class T>
 void BSTree<T>::inOrder(BSNode<T> *node) {
@@ -57,5 +65,16 @@ void BSTree<T>::inOrder(BSNode<T> *node) {
   cout << node->key << " ";
   inOrder(node->right);
 }
+
 template <class T>
-void BSTree<T>::destory(BSNode<T> *node) {}
+void BSTree<T>::destory() {
+  destory(root);
+}
+
+template <class T>
+void BSTree<T>::destory(BSNode<T> *node) {
+  if (node == nullptr) return;
+  destory(node->left);
+  destory(node->right);
+  delete node;
+}
