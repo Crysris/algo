@@ -2,6 +2,12 @@
 // Created by 夏天的风 on 2021/5/29.
 //
 #pragma once
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
 template <class T>
 class BSNode {
 public:

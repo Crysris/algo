@@ -28,7 +28,7 @@ bool BSTree<T>::insert(T k) {
     return true;
   }
   BSNode<T> *p = root;
-  BSNode<T> *q;
+    BSNode<T> *q=p;
   while (p != nullptr) {
     if (p->key == k)
       return false;
