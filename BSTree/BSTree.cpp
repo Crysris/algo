@@ -2,6 +2,7 @@
 
 template <class T>
 BSTree<T>::BSTree() {
+    size=0;
   root = nullptr;
 }
 template <class T>
@@ -25,6 +26,7 @@ template <class T>
 bool BSTree<T>::insert(T k) {
   if (root == nullptr) {
     root = new BSNode<T>(k);
+      size=1;
     return true;
   }
   BSNode<T> *p = root;
@@ -45,6 +47,7 @@ bool BSTree<T>::insert(T k) {
     q->right = r;
   else
     q->left = r;
+    size++;
   return true;
 }
 

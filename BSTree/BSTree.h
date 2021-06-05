@@ -4,6 +4,7 @@
 template <class T>
 class BSTree {
  public:
+    int size;
   BSTree();
   ~BSTree();
   void destory();
