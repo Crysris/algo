@@ -1,10 +1,12 @@
-#pragma once
-#include "BSNode.h"
-
+//#pragma once
+#ifndef BSTREE_H
+#define BSTREE_H
+#include "BSNode.cpp"
+//#include "BSNode.h"
 template <class T>
 class BSTree {
  public:
-    int size;
+  int size;
   BSTree();
   ~BSTree();
   void destory();
@@ -21,3 +23,4 @@ class BSTree {
   void inOrder(BSNode<T> *node);
   void destory(BSNode<T> *node);
 };
+#endif
