@@ -1,5 +1,23 @@
+# output
 */build
 /build
+
+# finder
 .DS_Store
-# /.vscode
-# /output
+
+#.idea
+/.idea
+
+# xcode
+algo.xcodeproj
+
+# .vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
+
+
