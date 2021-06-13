@@ -1,6 +1,9 @@
 # output
 */build
 /build
+*.out
+*/*.out
+
 
 # finder
 .DS_Store
