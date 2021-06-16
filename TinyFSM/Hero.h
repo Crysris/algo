@@ -1,7 +1,12 @@
 
+enum { STATE_STANDING, STATE_JUMPING, STATE_ATACCKING, STATE_DIVING };
 
-enum { STATE_STADING, STATE_JUMPING, STATE_DUCKING, STATE_DIVING };
+class Mario {
+ public:
+  bool isJumping;
+  bool isDiving;
+  bool isAtaccking;
+  void stateIn();
 
-class Hero {
-    bool isJumping;
+ private:
 };
