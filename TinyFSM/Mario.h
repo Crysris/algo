@@ -16,11 +16,15 @@ class Mario {
   void action();
 
  private:
+  int posX;
+  int posY;
+  void moveX(int direction);
+  void moveY(int direction);
   void stateIn(OPERATION action);
-  void handleStand();
-  void handelJump();
-  void handelDive();
-  void handelAtacck();
+  void handleStand(OPERATION action);
+  void handelJump(OPERATION action);
+  void handelDive(OPERATION action);
+  void handelAtacck(OPERATION action);
   OPERATION input();
 };
 

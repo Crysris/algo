@@ -43,25 +43,52 @@ OPERATION Mario::input() {
 void Mario::stateIn(OPERATION action) {
   switch (state) {
     case STATE_ATACCKING:
-      cout << "state : STATE_ATACCKING action : " << action << endl;
-      handelAtacck();
+      cout << "state : STATE_ATACCKING action : " << endl;
+      handelAtacck(action);
       break;
     case STATE_STANDING:
-      cout << "state : STATE_STANDING action : " << action << endl;
-      handleStand();
+      cout << "state : STATE_STANDING action : " << endl;
+      handleStand(action);
       break;
     case STATE_JUMPING:
-      cout << "state : STATE_JUMPING action : " << action << endl;
-      handelJump();
+      cout << "state : STATE_JUMPING action : " << endl;
+      handelJump(action);
       break;
     case STATE_DIVING:
-      cout << "state : STATE_DIVING action : " << action << endl;
-      handelDive();
+      cout << "state : STATE_DIVING action : " << endl;
+      handelDive(action);
       break;
   }
 }
 
-void Mario::handleStand() { state = STATE_JUMPING; }
-void Mario::handelJump() { state = STATE_ATACCKING; }
-void Mario::handelAtacck() { state = STATE_DIVING; }
-void Mario::handelDive() { state = STATE_STANDING; }
+void Mario::handleStand(OPERATION action) { state = STATE_JUMPING; }
+void Mario::handelJump(OPERATION action) {
+  if (action == OPER_STAND) {
+    state = STATE_STANDING;
+  } else if (action == OPER_ATACCK) {
+    state = STATE_ATACCKING;
+  } else {
+    cout << "invalid operation !" << endl;
+    handelJump(input());
+  }
+}
+
+void Mario::handelAtacck(OPERATION action) {
+  if (action == OPER_DIVE) {
+  }
+}
+void Mario::handelDive(OPERATION action) { state = STATE_STANDING; }
+
+void Mario::moveX(int direction) {
+  if (direction)
+    this->posX++;
+  else
+    this->posX--;
+}
+
+void Mario::moveY(int direction) {
+  if (direction)
+    this->posY++;
+  else
+    this->posY--;
+}
