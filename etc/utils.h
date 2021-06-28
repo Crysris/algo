@@ -1,5 +1,6 @@
 #include <sys/time.h>  //clock, gettimeofday, time
 
+#include <algorithm>
 #include <chrono>
 #include <cmath>
 #include <cstdio>
