@@ -1,7 +1,13 @@
 #include "../etc/utils.h"
 
 /*=======================================================================================
-    Manacher算法
+    公共子字符串substring与公共子序列subsequence的区别：
+    子字符串要求连续，而子序列不
+*/
+
+/*
+    leetcode 5 Longest_Palindromic_Substring
+    回文串总数  Manacher算法
     填充*符号使字符串为奇数串
     枚举对称中心
 */
@@ -36,12 +42,13 @@ string longestPalindrome(string s) {
   return p;
 }
 /*
-O(n^2) O(n)
-dp[i][j]表示以s[i]开头，s[j]结尾的最长Palindrome长度
-if s[i]=s[j]
-    dp[i][j]=dp[i+1][j-1]+2
-else
-    dp[i][j]=1
+    leetcode 5 Longest_Palindromic_Substring
+    回文串总数 O(n^2) O(n)
+    dp[i][j]表示以s[i]开头，s[j]结尾的最长Palindrome长度
+    if s[i]=s[j]
+        dp[i][j]=dp[i+1][j-1]+2
+    else
+        dp[i][j]=1
 */
 string longestPalindrome_3(string s) {
   int len = s.length();
@@ -69,7 +76,10 @@ string longestPalindrome_3(string s) {
   return s.substr(low, maxLength);
 }
 
-// 滚动数组
+/*
+    leetcode 5 Longest_Palindromic_Substring
+    回文串总数  滚动数组
+*/
 string longestPalindrome_4(string s) {
   int len = s.length();
   if (len == 0) return nullptr;
@@ -100,10 +110,7 @@ string longestPalindrome_4(string s) {
   string ans = s.substr(low, maxLength);
   return ans;
 }
-void code5_Longest_Palindromic_Substring() {
-  string s = "acabddbacaa";
-  longestPalindrome(s);
-}
+
 //  回文串总数
 int countSubstrings(string s) {
   int len = s.length();
@@ -129,6 +136,11 @@ int countSubstrings(string s) {
     }
   }
   return ans;
+}
+
+void code5() {
+  string s = "acabddbacaa";
+  longestPalindrome(s);
 }
 /*=======================================================================================
     公共子字符串substring与公共子序列subsequence的区别：
@@ -240,7 +252,7 @@ string SubSequenceLength(string s1, string s2) { return s1; }
     [2,3,-2,4] return 6
     [2,0,-3,3,-2,4,-5,-1]
 */
-int maxProduct(vector<int>& nums) {
+int maxProduct(vector<int> &nums) {
   int len = nums.size();
   int ans = nums[0], res, pre = -1;
   vector<int> zeroPos;
@@ -265,12 +277,24 @@ void code152() {
   vector<int> nums{3, -1, 4};
   int ans = maxProduct(nums);
 }
-
-void code647_Palindromic_Substrings() {
-  string s = "acabddbacaa";
-  countSubstrings(s);
+/*=======================================================================================
+     leetcode62. Unique Paths
+*/
+int uniquePaths(int m, int n) {
+  int **dp = new int *[m];
+  for (int i = 0; i < m; i++) dp[i] = new int[n], dp[i][0] = 1;
+  for (int j = 0; j < n; j++) dp[0][j] = 1;
+  for (int i = 1; i < m; i++) {
+    for (int j = 1; j < n; j++) {
+      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+    }
+  }
+  //   printMatrix(dp, m, n);
+  return dp[m - 1][n - 1];
 }
+void code62() { uniquePaths(8, 8); }
 
+//=======================================================================================
 int main() {
   code22();
   return 0;

@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 #include <sys/time.h>  //clock, gettimeofday, time
 
 #include <algorithm>
@@ -21,7 +20,6 @@
 using namespace std;
 
 #define ARRAY_SIZE 1000
-
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -45,5 +43,14 @@ void printVector(vector<string> array) {
 }
 void printArray(int *array, int n) {
   for (int i = 0; i < n; i++) cout << array[i] << " ";
+  cout << endl;
+}
+void printMatrix(int **array, int m, int n) {
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << array[i][j] << " ";
+    }
+    cout << endl;
+  }
   cout << endl;
 }
