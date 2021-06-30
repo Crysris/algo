@@ -205,37 +205,72 @@ int length_LCS_1(string s1, string s2) {
 /*
     最长公共子字符串 Longest Common Subsequence LCS
     枚举子字符串的起点与终点
-    dp[i][j]表示字符串s1[0],s1[1]......s1[i]与字符串s2[0],s2[1]......s2[j]的LCS
+    dp[i][j]表示 以s1[i]与s2[j]结尾的最长公共子串的长度
+
+    if s1[i]==s2[j]
+        dp[i][j]=dp[i-1][j-1]+1
+    else
+        dp[i][j]=0
     m,n
 */
+
 int lengthLCS(string s1, string s2) {
   int m = s1.length();
   int n = s2.length();
   int dp[m][n];
   memset(dp, 0, sizeof(dp));
   int ans = 0;
+  for (int i = 0; i < m; i++)
+    if (s1[i] == s2[0]) dp[i][0] = 1;
+  for (int j = 0; j < n; j++)
+    if (s1[0] == s2[j]) dp[0][j] = 1;
   for (int i = 1; i < m; i++) {
     for (int j = 1; j < n; j++) {
       if (s1[i] == s2[j]) {
-        if (i == 0 && j == 0)
-          dp[i][j] = 1;
-        else if (i == 0)
-          dp[]
-      }
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+        if (dp[i][j] > ans) ans = dp[i][j];
+      } else
+        dp[i][j] = 0;
     }
   }
   return ans;
 }
-string LCS(string s1, string s2) { return s1; }
+string LCS(string s1, string s2) {
+  int m = s1.length();
+  int n = s2.length();
+  int dp[m][n];
+  memset(dp, 0, sizeof(dp));
+  int endPos = 0, maxLength = 0;
+  for (int i = 0; i < m; i++)
+    if (s1[i] == s2[0]) dp[i][0] = 1;
+  for (int j = 0; j < n; j++)
+    if (s1[0] == s2[j]) dp[0][j] = 1;
+  for (int i = 1; i < m; i++) {
+    for (int j = 1; j < n; j++) {
+      if (s1[i] == s2[j]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+        if (dp[i][j] > maxLength) {
+          maxLength = dp[i][j];
+          endPos = i;
+        }
+      } else
+        dp[i][j] = 0;
+    }
+  }
+
+  string ans = s1.substr(endPos + 1 - maxLength, maxLength);
+  return ans;
+}
 void code22() {
   string s1 = "abdbacefg";
   string s2 = "bgfedecdbacaefg";
-  lengthLCS(s1, s2);
+  LCS(s1, s2);
 }
 
 //=======================================================================================
 /*
     最长公共子序列
+    dp[i][j]表示字符串s1[0],s1[1]......s1[i]与字符串s2[0],s2[1]......s2[j]的LCS
 
 */
 int SubSequence(string s1, string s2) {
