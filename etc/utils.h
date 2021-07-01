@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -55,8 +56,83 @@ void printMatrix(int **array, int m, int n) {
   cout << endl;
 }
 
+/*
+  枚举最长公共子串长度(m<n)
+  i,j为子串的起点，k为长度l
 
+*/
+string generateLCSAnswer(string s1, string s2) {
+  if (s1.length() > s2.length()) swap(s1, s2);
+  int m = s1.length();
+  int n = s2.length();
+  int start1, start2, count;
+  for (int k = m; k > 0; k--) {
+    for (int i = 0; i <= m - k; i++) {
+      for (int j = 0; j <= n - k; j++) {
+        start1 = i;
+        start2 = j;
+        count = 0;
+        while (count < k) {
+          if (s1[start1] != s2[start2]) {
+            break;
+          }
+          start1++;
+          start2++;
+          count++;
+        }
+        if (count == k) {
+          string ans = s1.substr(i, k);
+          return ans;
+        }
+      }
+    }
+  }
+  return nullptr;
+}
 
-void 
+/*
+  根据测试用例中的字符串对生成LCS答案并储存在文本中
 
+*/
+void getLCSAnswer() {
+  string outPath = "/work/tool/algo/testcase/stringPairs.txt";
+  string inPath = "/work/tool/algo/testcase/LCS_answer.txt";
+  ifstream out(outPath.c_str());
+  ofstream in(inPath.c_str());
+  if (!out.is_open()) {
+    cerr << "open file error!" << endl;
+  }
+  if (!in.is_open()) {
+    cerr << "open file error!" << endl;
+  }
+  string s1 = "", s2 = "", ans = "";
+  while (getline(out, s1, ' ')) {
+    getline(out, s2);
+    ans = generateLCSAnswer(s1, s2);
+    cout << s1 << " " << s2 << " " << ans << endl;
+  }
+}
 
+/*
+  从testcase文本中获取测试用例字符串对
+
+*/
+vector<vector<string>> getStringPairs() {
+  string path = "/work/tool/algo/testcase/stringPairs.txt";
+  ifstream out(path.c_str());
+  if (!out.is_open()) {
+    cerr << ("open file error!") << endl;
+    exit(-1);
+  }
+  vector<vector<string>> stringPairs;
+  vector<string> strPair = {"", ""};
+  string s1 = "", s2 = "";
+  while (getline(out, s1, ' ')) {
+    getline(out, s2);
+    strPair[0] = s1;
+    strPair[1] = s2;
+    stringPairs.push_back(strPair);
+    cout << s1 << " " << s2 << endl;
+  }
+  return stringPairs;
+}
