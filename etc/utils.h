@@ -61,7 +61,7 @@ void printMatrix(int **array, int m, int n) {
   i,j为子串的起点，k为长度l
 
 */
-string generateLCSAnswer(string s1, string s2) {
+string getLCSAnswer(string s1, string s2) {
   if (s1.length() > s2.length()) swap(s1, s2);
   int m = s1.length();
   int n = s2.length();
@@ -94,9 +94,9 @@ string generateLCSAnswer(string s1, string s2) {
   根据测试用例中的字符串对生成LCS答案并储存在文本中
 
 */
-void getLCSAnswer() {
-  string outPath = "/work/tool/algo/testcase/stringPairs.txt";
-  string inPath = "/work/tool/algo/testcase/LCS_answer.txt";
+void writeLCSAnswerToTxt() {
+  string outPath = "../testcase/stringPairs.txt";
+  string inPath = "../testcase/LCS_answer.txt";
   ifstream out(outPath.c_str());
   ofstream in(inPath.c_str());
   if (!out.is_open()) {
@@ -108,7 +108,8 @@ void getLCSAnswer() {
   string s1 = "", s2 = "", ans = "";
   while (getline(out, s1, ' ')) {
     getline(out, s2);
-    ans = generateLCSAnswer(s1, s2);
+    ans = getLCSAnswer(s1, s2);
+    in << ans << endl;
     cout << s1 << " " << s2 << " " << ans << endl;
   }
 }
@@ -117,8 +118,10 @@ void getLCSAnswer() {
   从testcase文本中获取测试用例字符串对
 
 */
-vector<vector<string>> getStringPairs() {
-  string path = "/work/tool/algo/testcase/stringPairs.txt";
+vector<vector<string>> getStringPairsFromTxt() {
+  string path =
+      "/Users/messi/Documents/MacBookAir/work/code/cpp/algo/testcase/"
+      "stringPairs.txt";
   ifstream out(path.c_str());
   if (!out.is_open()) {
     cerr << ("open file error!") << endl;
@@ -132,7 +135,25 @@ vector<vector<string>> getStringPairs() {
     strPair[0] = s1;
     strPair[1] = s2;
     stringPairs.push_back(strPair);
-    cout << s1 << " " << s2 << endl;
+    // cout << s1 << " " << s2 << endl;
   }
   return stringPairs;
+}
+
+vector<string> getStringAnswerFromTxt() {
+  string path =
+      "/Users/messi/Documents/MacBookAir/work/code/cpp/algo/testcase/"
+      "LCS_answer.txt";
+  ifstream out(path.c_str());
+  if (!out.is_open()) {
+    cerr << ("open file error!") << endl;
+    exit(-1);
+  }
+  vector<string> lcs_answer;
+  string s = "";
+  while (getline(out, s)) {
+    lcs_answer.push_back(s);
+    // cout << s << endl;
+  }
+  return lcs_answer;
 }

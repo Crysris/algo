@@ -262,9 +262,18 @@ string LCS(string s1, string s2) {
   return ans;
 }
 void code22() {
-  string s1 = "abdbacefg";
-  string s2 = "bgfedecdbacaefg";
-  LCS(s1, s2);
+  vector<string> lcs_answer = getStringAnswerFromTxt();
+  vector<vector<string> > stringPairs = getStringPairsFromTxt();
+  string s1, s2, res, ans;
+  int n = lcs_answer.size();
+  for (int i = 0; i < n; i++) {
+    s1 = stringPairs[i][0];
+    s2 = stringPairs[i][1];
+    res = LCS(s1, s2);
+    ans = lcs_answer[i];
+    if (ans.length() != res.length())
+      cout << "ans : " << ans << " ,res " << res << endl;
+  }
 }
 
 //=======================================================================================
@@ -331,7 +340,8 @@ void code62() { uniquePaths(8, 8); }
 
 //=======================================================================================
 int main() {
-  getLCSAnswer();
+  // writeLCSAnswerToTxt();
+  //   code22();
   code22();
   return 0;
 }
