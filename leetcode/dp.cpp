@@ -278,19 +278,21 @@ void code22() {
 
 //=======================================================================================
 /*
-    最长公共子序列
+    最长公共子序列 Largest Common SubSequence
     dp[i][j]表示字符串s1[0],s1[1]......s1[i]与字符串s2[0],s2[1]......s2[j]的LCS
-
+    m,nl
 */
 int SubSequence(string s1, string s2) {
-  int n = s1.length();
+  if (s1.length() > s2.length()) swap(s1, s2);
+  int m = s1.length();
+  int n = s2.length();
   int ans = 0;
   return ans;
 }
 
 string SubSequenceLength(string s1, string s2) { return s1; }
 
-/*
+/*=======================================================================================
     leetcode152. Maximum Product Subarray
     记录最大及最小连续子数组乘积
     [2,3,-2,4] return 6
