@@ -49,36 +49,63 @@ void RBTree<T>::insert(RBNode<T>* root, RBNode<T>* node) {
     }
   }
   size++;
+  if (node->key > tempParent->key)
+    tempParent->right = node;
+  else
+    tempParent->left = node;
+  node->parent = tempParent;
   /*==============================    情景3   ==============================
    插入节点的父节点为黑色
  */
-  if (tempParent->color == RB_BLACK) {
-    if (node->key > tempParent->key)
-      tempParent->right = node;
-    else
-      tempParent->left = node;
-    return;
-  }
+  if (tempParent->color == RB_BLACK) return;
 
-  // 叔叔节点存在
-  RBNode<T>* uncle;
-  if (tempParent->parent->left == tempParent) {
-    uncle = tempParent->parent->right;
-  } else
-    uncle = tempParent->parent->left;
-  /*==============================    情景4.1   ==============================
-   插入节点的叔叔节点为红色
- */
-  if (uncle->color == RB_RED) {
-    tempParent->color = RB_BLACK;
-    uncle->color = RB_BLACK;
-    if(uncle->parent->parent==nullptr||uncle->parent->parent->color==RB_RED){
-
-    }
-    return;
-  }
-  
+  insertFixUp(root, node);
 }
+
+/*
+  插入修正函数，在插入之后使用，使红黑树恢复平衡
+  应用于情景4.1，4.2，4.3
+*/
+template <class T>
+void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
+  RBNode<T>*father_node, *grandfa_node, *uncle;
+  RBNode<T>* current_node = node;
+  // 叔叔节点存在
+
+  while (true) {
+    // 插入节点的父节点为空，或者为空，则不需要修正
+    if (current_node->parent == nullptr ||
+        current_node->parent->color == RB_BLACK)
+      break;
+    father_node = current_node->parent;
+    grandfa_node = father_node->parent;
+    if (grandfa_node) {
+      if (father_node == grandfa_node->left)
+        uncle = grandfa_node->right;
+      else
+        uncle = grandfa_node->left;
+      if (uncle) {
+        if (uncle->color == RB_RED) {
+          /*============================== 情景4.1==============================
+            插入节点的叔叔节点为红色
+          */
+        } else {
+          if (father_node == grandfa_node->left) {
+            /*==============================情景4.2==============================
+              插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的左子节点
+            */
+          } else {
+            /*==============================情景4.3==============================
+              插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的右子节点
+            */
+          }
+        }
+      } else {
+      }
+    }
+  }
+}
+
 /*
   对p进行左旋，意味着"将p变成一个左节点"。
 
