@@ -5,11 +5,8 @@
 //  Created by 夏天的风 on 2021/6/3.
 //
 
-#include "BSTree/BSTree.cpp"
-#include "BSTree/BSTree.h"
 #include "RBTree/RBTree.cpp"
-#include "RBTree/RBTree.h"
-#include "TinyFSM/Mario.cpp"
+
 #define MAX_NODE_NUM 50
 
 /*
@@ -27,7 +24,7 @@ int main_1(int argc, const char *argv[]) {
   unordered_set<int>::iterator iter;
   srand((int)time(nullptr));
   int num;
-  
+
   int count = 0;
   while (m_set.size() < MAX_NODE_NUM) {
     // [0,MAX_NODE_NUM)
