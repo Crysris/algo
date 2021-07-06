@@ -17,7 +17,7 @@
 */
 void printTree(int treeHeight = 3) {}
 
-int main_1(int argc, const char *argv[]) {
+int main(int argc, const char *argv[]) {
   auto *m_tree = new RBTree<int>();
   // BSNode<int> node(0);
   unordered_set<int> m_set;
@@ -40,11 +40,6 @@ int main_1(int argc, const char *argv[]) {
     }
     count++;
   }
-  return 0;
-}
-
-int main() {
-  Mario mario;
-  mario.init();
+  m_tree->inOrder();
   return 0;
 }

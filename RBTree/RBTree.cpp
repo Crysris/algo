@@ -14,11 +14,17 @@ RBTree<T>::RBTree(T k, RBTCOLOR c) {
 
 template <class T>
 void RBTree<T>::insert(T k) {
+  /*==============================    情景1   ==============================
+  树为空，将插入节点置为根节点
+  */
   if (mRoot == nullptr) {
     size = 1;
     mRoot = new RBNode<T>(k, RB_BLACK);
     return;
   }
+  /*
+     默认插入节点的颜色为红色
+  */
   RBNode<T>* node = new RBNode<T>(k, RB_RED);
   insert(mRoot, node);
 }
@@ -28,9 +34,13 @@ void RBTree<T>::insert(RBNode<T>* root, RBNode<T>* node) {
   RBNode<T>* temp = root;
   RBNode<T>* tempParent = root;
   while (temp != nullptr) {
-    if (node->key == temp->key)
+    /*==============================    情景2   ==============================
+      插入节点的key值已存在
+    */
+    if (node->key == temp->key) {
       return;
-    else if (node->key > temp->key) {
+
+    } else if (node->key > temp->key) {
       tempParent = temp;
       temp = temp->right;
     } else {
@@ -39,12 +49,39 @@ void RBTree<T>::insert(RBNode<T>* root, RBNode<T>* node) {
     }
   }
   size++;
-  if (node->key > tempParent->key)
-    tempParent->right = node;
-  else
-    tempParent->left = node;
+  /*==============================    情景3   ==============================
+   插入节点的父节点为黑色
+ */
+  if (tempParent->color == RB_BLACK) {
+    if (node->key > tempParent->key)
+      tempParent->right = node;
+    else
+      tempParent->left = node;
+    return;
+  }
+
+  // 叔叔节点存在
+  RBNode<T>* uncle;
+  if (tempParent->parent->left == tempParent) {
+    uncle = tempParent->parent->right;
+  } else
+    uncle = tempParent->parent->left;
+  /*==============================    情景4.1   ==============================
+   插入节点的叔叔节点为红色
+ */
+  if (uncle->color == RB_RED) {
+    tempParent->color = RB_BLACK;
+    uncle->color = RB_BLACK;
+    if(uncle->parent->parent==nullptr||uncle->parent->parent->color==RB_RED){
+
+    }
+    return;
+  }
+  
 }
 /*
+  对p进行左旋，意味着"将p变成一个左节点"。
+
          pNode                           pNode
            |                                |
            p                                V
