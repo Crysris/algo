@@ -21,6 +21,7 @@
 using namespace std;
 
 #define ARRAY_SIZE 1000
+#define LIST_NODE_NUMBER 100
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -29,6 +30,14 @@ struct TreeNode {
   TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
   TreeNode(int x, TreeNode *left, TreeNode *right)
       : val(x), left(left), right(right) {}
+};
+
+struct ListNode {
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 void printVector(vector<int> array) {
   for (auto p : array) {
