@@ -73,7 +73,7 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
   // 叔叔节点存在
 
   while (true) {
-    // 插入节点的父节点为空，或者为空，则不需要修正
+    // 插入节点的父节点为空，或者为黑色，则不需要修正
     if (current_node->parent == nullptr ||
         current_node->parent->color == RB_BLACK)
       break;
@@ -89,21 +89,74 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
           /*============================== 情景4.1==============================
             插入节点的叔叔节点为红色
           */
+          father_node->color = RB_BLACK;
+          uncle->color = RB_BLACK;
+          grandfa_node->color = RB_RED;
+          current_node = grandfa_node;
         } else {
           if (father_node == grandfa_node->left) {
             /*==============================情景4.2==============================
               插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的左子节点
             */
+            if (current_node == father_node->left) {
+              /*情景4.2.1
+               插入节点是父节点的左子节点
+              */
+            } else {
+              /*情景4.2.2
+               插入节点是父节点的右子节点
+              */
+            }
           } else {
             /*==============================情景4.3==============================
               插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的右子节点
             */
+            if (current_node == father_node->left) {
+              /*情景4.3.1
+                插入节点是父节点的左子节点
+              */
+            } else {
+              /*情景4.3.2
+                插入节点是父节点的右子节点
+              */
+            }
           }
         }
       } else {
+        if (father_node == grandfa_node->left) {
+          /*==============================情景4.2==============================
+            插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的左子节点
+          */
+          if (current_node == father_node->left) {
+            /*情景4.2.1
+             插入节点是父节点的左子节点
+            */
+          } else {
+            /*情景4.2.2
+             插入节点是父节点的右子节点
+            */
+          }
+        } else {
+          /*==============================情景4.3==============================
+            插入节点的叔叔节点为黑色或空，且插入节点的父节点使祖父节点的右子节点
+          */
+          if (current_node == father_node->left) {
+            /*情景4.3.1
+              插入节点是父节点的左子节点
+            */
+          } else {
+            /*情景4.3.2
+              插入节点是父节点的右子节点
+            */
+          }
+        }
       }
     }
   }
+  /*
+    如果当前节点为根节点，则直接置为黑色
+  */
+  root->color = RB_BLACK;
 }
 
 /*
@@ -138,9 +191,27 @@ void RBTree<T>::leftRotate(RBNode<T>* root, RBNode<T>* node) {
   p->right = r;
   r->parent = p;
 }
+/*
+  对p进行右旋，意味着"将p变成一个右节点"。
 
+         pNode                           pNode
+           |                                |
+           p                                F
+        /    \         ====>>            /    \
+      F       V                         R      p
+   /    \                                     / \
+  R      X                                   X   V
+*/
 template <class T>
-void RBTree<T>::rightRotate(RBNode<T>* root, RBNode<T>* node) {}
+void RBTree<T>::rightRotate(RBNode<T>* root, RBNode<T>* node) {
+  RBNode<T>*pNode, *p, *f, *x;
+  pNode = root;
+  p = node;
+  f = p->left;
+  if (pNode == nullptr) {
+  }
+  x = f->right;
+}
 
 template <class T>
 RBNode<T>* RBTree<T>::search(T k) {
