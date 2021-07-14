@@ -49,12 +49,12 @@ class RBTree {
   // 返回以tree为根节点的红黑树的最小节点
   RBNode<T> *minimun(RBNode<T> *tree);
 
-  void leftRotate(RBNode<T> *root, RBNode<T> *node);
-  void rightRotate(RBNode<T> *root, RBNode<T> *node);
+  void leftRotate(RBNode<T>* &root, RBNode<T> *node);
+  void rightRotate(RBNode<T>* &root, RBNode<T> *node);
 
-  void insert(RBNode<T> *root, RBNode<T> *node);
+  void insert(RBNode<T> *&root, RBNode<T> *node);
   // 插入修正函数
-  void insertFixUp(RBNode<T> *root, RBNode<T> *node);
+  void insertFixUp(RBNode<T> *&root, RBNode<T> *node);
 
   void remove(RBNode<T> *root, RBNode<T> *node);
   // 删除修正函数

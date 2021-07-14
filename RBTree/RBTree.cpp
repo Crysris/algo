@@ -30,7 +30,7 @@ void RBTree<T>::insert(T k) {
 }
 
 template <class T>
-void RBTree<T>::insert(RBNode<T>* root, RBNode<T>* node) {
+void RBTree<T>::insert(RBNode<T>*& root, RBNode<T>* node) {
   RBNode<T>* temp = root;
   RBNode<T>* tempParent = root;
   while (temp != nullptr) {
@@ -67,7 +67,7 @@ void RBTree<T>::insert(RBNode<T>* root, RBNode<T>* node) {
   应用于情景4.1，4.2，4.3
 */
 template <class T>
-void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
+void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
   RBNode<T>*father_node, *grandfa_node, *uncle;
   RBNode<T>* current_node = node;
   // 叔叔节点存在
@@ -102,10 +102,15 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
               /*情景4.2.1
                插入节点是父节点的左子节点
               */
+              rightRotate(grandfa_node->parent, grandfa_node);
+              grandfa_node->color = RB_RED;
+              father_node->color = RB_BLACK;
             } else {
               /*情景4.2.2
                插入节点是父节点的右子节点
               */
+              swap(current_node, father_node);
+              leftRotate(father_node, current_node);
             }
           } else {
             /*==============================情景4.3==============================
@@ -115,10 +120,15 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
               /*情景4.3.1
                 插入节点是父节点的左子节点
               */
+              swap(father_node, current_node);
+              rightRotate(father_node, current_node);
             } else {
               /*情景4.3.2
                 插入节点是父节点的右子节点
               */
+              leftRotate(grandfa_node->parent, grandfa_node);
+              grandfa_node->color = RB_RED;
+              father_node->color = RB_BLACK;
             }
           }
         }
@@ -131,10 +141,15 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
             /*情景4.2.1
              插入节点是父节点的左子节点
             */
+            rightRotate(grandfa_node->parent, grandfa_node);
+            grandfa_node->color = RB_RED;
+            father_node->color = RB_BLACK;
           } else {
             /*情景4.2.2
              插入节点是父节点的右子节点
             */
+            swap(father_node, current_node);
+            leftRotate(current_node->parent, current_node);
           }
         } else {
           /*==============================情景4.3==============================
@@ -144,10 +159,15 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
             /*情景4.3.1
               插入节点是父节点的左子节点
             */
+            swap(father_node, current_node);
+            rightRotate(current_node->parent, current_node);
           } else {
             /*情景4.3.2
               插入节点是父节点的右子节点
             */
+            leftRotate(grandfa_node->parent, grandfa_node);
+            grandfa_node->color = RB_RED;
+            father_node->color = RB_BLACK;
           }
         }
       }
@@ -160,7 +180,9 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
 }
 
 /*
-  对p进行左旋，意味着"将p变成一个左节点"。
+
+  对p进行左旋，意味着"将p变成一个左节点"
+  P,F一定不为空
 
          pNode                           pNode
            |                                |
@@ -171,46 +193,64 @@ void RBTree<T>::insertFixUp(RBNode<T>* root, RBNode<T>* node) {
           R      X                   F     R
 */
 template <class T>
-void RBTree<T>::leftRotate(RBNode<T>* root, RBNode<T>* node) {
+void RBTree<T>::leftRotate(RBNode<T>* &root, RBNode<T>* node) {
   RBNode<T>*pNode, *r, *v, *p;
   pNode = root;
   p = node;
   v = p->right;
   r = v->left;
-
-  // pNode--v
-  if (pNode->left == p)
-    pNode->left = v;
-  else
-    pNode->right = v;
-  v->parent = pNode;
+  // p--r
+  p->right = r;
+  if (r != nullptr) r->parent = p;
   // v--p
   v->left = p;
   p->parent = v;
-  // p--r
-  p->right = r;
-  r->parent = p;
+  // pNode--v
+  v->parent = pNode;
+  if (pNode == nullptr) {
+    root = v;
+  } else {
+    if (pNode->left == p)
+      pNode->left = v;
+    else
+      pNode->right = v;
+  }
 }
 /*
-  对p进行右旋，意味着"将p变成一个右节点"。
-
+  对p进行右旋，意味着"将p变成一个右节点"
+  P,F一定不为空
          pNode                           pNode
            |                                |
            p                                F
-        /    \         ====>>            /    \
+        /    \         ====>>
+     /    \
       F       V                         R      p
    /    \                                     / \
   R      X                                   X   V
 */
 template <class T>
-void RBTree<T>::rightRotate(RBNode<T>* root, RBNode<T>* node) {
+void RBTree<T>::rightRotate(RBNode<T>* &root, RBNode<T>* node) {
   RBNode<T>*pNode, *p, *f, *x;
   pNode = root;
   p = node;
   f = p->left;
-  if (pNode == nullptr) {
-  }
   x = f->right;
+  // p--x
+  p->left = x;
+  if (x != nullptr) x->parent = p;
+  // f--p
+  f->right = p;
+  p->parent = f;
+  // pNode--f
+  f->parent = pNode;
+  if (pNode == nullptr) {
+    root = nullptr;
+  } else {
+    if (pNode->left == p)
+      pNode->left = f;
+    else
+      pNode->right = f;
+  }
 }
 
 template <class T>
