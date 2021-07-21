@@ -40,6 +40,8 @@ class RBTree {
   void inOrder();
   void postOrder();
 
+  void levelOrder();
+
  private:
   RBNode<T> *search(RBNode<T> *node, T k) const;
   RBNode<T> *iterativeSearch(RBNode<T> *node, T k) const;
@@ -49,22 +51,23 @@ class RBTree {
   // 返回以tree为根节点的红黑树的最小节点
   RBNode<T> *minimun(RBNode<T> *tree);
 
-  void leftRotate(RBNode<T>* &root, RBNode<T> *node);
-  void rightRotate(RBNode<T>* &root, RBNode<T> *node);
+  void leftRotate(RBNode<T> *&root, RBNode<T> *node);
+  void rightRotate(RBNode<T> *&root, RBNode<T> *node);
 
   void insert(RBNode<T> *&root, RBNode<T> *node);
   // 插入修正函数
   void insertFixUp(RBNode<T> *&root, RBNode<T> *node);
 
-  void remove(RBNode<T> *root, RBNode<T> *node);
+  void remove(RBNode<T> *&root, RBNode<T> *node);
   // 删除修正函数
-  void removeFixUp(RBNode<T> *root, RBNode<T> *node, RBNode<T> *parent);
+  void removeFixUp(RBNode<T> *&root, RBNode<T> *node, RBNode<T> *parent);
   // 回以tree为根节点的红黑树的高
   int getHeight(RBNode<T> *tree) const;
 
   void preOrder(RBNode<T> *tree) const;
   void inOrder(RBNode<T> *tree) const;
   void postOrder(RBNode<T> *tree) const;
+  void levelOrder(RBNode<T> *tree) const;
   void print(RBNode<T> *tree);
   void destory(RBNode<T> *tree);
 

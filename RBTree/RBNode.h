@@ -15,5 +15,4 @@ class RBNode {
   RBNode(T k, RBTCOLOR c);
   RBNode(T k, RBTCOLOR c, RBNode<T> *l, RBNode<T> *r, RBNode<T> *p);
 };
-
 #endif

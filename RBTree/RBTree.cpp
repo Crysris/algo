@@ -102,7 +102,7 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
               /*情景4.2.1
                插入节点是父节点的左子节点
               */
-              rightRotate(grandfa_node->parent, grandfa_node);
+              rightRotate(root, grandfa_node);
               grandfa_node->color = RB_RED;
               father_node->color = RB_BLACK;
             } else {
@@ -110,7 +110,7 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
                插入节点是父节点的右子节点
               */
               swap(current_node, father_node);
-              leftRotate(father_node, current_node);
+              leftRotate(root, current_node);
             }
           } else {
             /*==============================情景4.3==============================
@@ -121,12 +121,12 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
                 插入节点是父节点的左子节点
               */
               swap(father_node, current_node);
-              rightRotate(father_node, current_node);
+              rightRotate(root, current_node);
             } else {
               /*情景4.3.2
                 插入节点是父节点的右子节点
               */
-              leftRotate(grandfa_node->parent, grandfa_node);
+              leftRotate(root, grandfa_node);
               grandfa_node->color = RB_RED;
               father_node->color = RB_BLACK;
             }
@@ -141,7 +141,7 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
             /*情景4.2.1
              插入节点是父节点的左子节点
             */
-            rightRotate(grandfa_node->parent, grandfa_node);
+            rightRotate(root, grandfa_node);
             grandfa_node->color = RB_RED;
             father_node->color = RB_BLACK;
           } else {
@@ -149,7 +149,7 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
              插入节点是父节点的右子节点
             */
             swap(father_node, current_node);
-            leftRotate(current_node->parent, current_node);
+            leftRotate(root, current_node);
           }
         } else {
           /*==============================情景4.3==============================
@@ -160,12 +160,12 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
               插入节点是父节点的左子节点
             */
             swap(father_node, current_node);
-            rightRotate(current_node->parent, current_node);
+            rightRotate(root, current_node);
           } else {
             /*情景4.3.2
               插入节点是父节点的右子节点
             */
-            leftRotate(grandfa_node->parent, grandfa_node);
+            leftRotate(root, grandfa_node);
             grandfa_node->color = RB_RED;
             father_node->color = RB_BLACK;
           }
@@ -193,9 +193,9 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
           R      X                   F     R
 */
 template <class T>
-void RBTree<T>::leftRotate(RBNode<T>* &root, RBNode<T>* node) {
+void RBTree<T>::leftRotate(RBNode<T>*& root, RBNode<T>* node) {
   RBNode<T>*pNode, *r, *v, *p;
-  pNode = root;
+  pNode = node->parent;
   p = node;
   v = p->right;
   r = v->left;
@@ -222,16 +222,15 @@ void RBTree<T>::leftRotate(RBNode<T>* &root, RBNode<T>* node) {
          pNode                           pNode
            |                                |
            p                                F
-        /    \         ====>>
-     /    \
+        /    \         ====>>            /    \
       F       V                         R      p
    /    \                                     / \
   R      X                                   X   V
 */
 template <class T>
-void RBTree<T>::rightRotate(RBNode<T>* &root, RBNode<T>* node) {
+void RBTree<T>::rightRotate(RBNode<T>*& root, RBNode<T>* node) {
   RBNode<T>*pNode, *p, *f, *x;
-  pNode = root;
+  pNode = node->parent;
   p = node;
   f = p->left;
   x = f->right;
@@ -244,7 +243,7 @@ void RBTree<T>::rightRotate(RBNode<T>* &root, RBNode<T>* node) {
   // pNode--f
   f->parent = pNode;
   if (pNode == nullptr) {
-    root = nullptr;
+    root = f;
   } else {
     if (pNode->left == p)
       pNode->left = f;
@@ -287,12 +286,49 @@ RBNode<T>* RBTree<T>::iterativeSearch(RBNode<T>* node, T k) const {
 }
 
 template <class T>
+void RBTree<T>::levelOrder() {
+  cout << "LevelOrderPrint : " << endl;
+  levelOrder(mRoot);
+}
+
+template <class T>
+void RBTree<T>::levelOrder(RBNode<T>* tree) const {
+  if (tree == nullptr) return;
+  queue<RBNode<T>*> curLevelNodes;
+  curLevelNodes.push(tree);
+  int count = 1, nextCount;
+  RBNode<T>* node;
+
+  while (!curLevelNodes.empty()) {
+    nextCount = 0;
+    while (count--) {
+      node = curLevelNodes.front();
+      curLevelNodes.pop();
+
+      cout << node->key << " ";
+      if (node->left != nullptr) {
+        nextCount++;
+        curLevelNodes.push(node->left);
+      }
+      if (node->right != nullptr) {
+        nextCount++;
+        curLevelNodes.push(node->right);
+      }
+    }
+    count = nextCount;
+    cout << endl;
+  }
+}
+
+template <class T>
 void RBTree<T>::print() {
   print(mRoot);
 }
 
 template <class T>
-void RBTree<T>::print(RBNode<T>* tree) {}
+void RBTree<T>::print(RBNode<T>* tree) {
+  int height = getHeight(tree);
+}
 
 template <class T>
 int RBTree<T>::getHeight() {

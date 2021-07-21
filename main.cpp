@@ -7,7 +7,7 @@
 
 #include "RBTree/RBTree.cpp"
 
-#define MAX_NODE_NUM 15
+#define MAX_NODE_NUM 100
 
 /*
  if root==nullptr ,treeHeight=0;
@@ -17,7 +17,7 @@
 */
 void printTree(int treeHeight = 3) {}
 
-int main_1(int argc, const char *argv[]) {
+int main(int argc, const char *argv[]) {
   auto *m_tree = new RBTree<int>();
   // BSNode<int> node(0);
   unordered_set<int> m_set;
@@ -40,14 +40,15 @@ int main_1(int argc, const char *argv[]) {
     }
     count++;
   }
-  m_tree->inOrder();
+  m_tree->levelOrder();
   return 0;
 }
-int main() {
+int main_1() {
   auto *m_tree = new RBTree<int>();
-  for (int i = 0; i < 5; i++) {
-    m_tree->insert(i);
+  for (int i = 0; i < MAX_NODE_NUM; i++) {
+    int val = MAX_NODE_NUM - i;
+    m_tree->insert(val);
   }
-  m_tree->inOrder();
+  m_tree->levelOrder();
   return 0;
 }
