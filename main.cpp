@@ -5,12 +5,9 @@
 //  Created by 夏天的风 on 2021/6/3.
 //
 
-#include "BSTree/BSTree.cpp"
-#include "BSTree/BSTree.h"
 #include "RBTree/RBTree.cpp"
-#include "RBTree/RBTree.h"
-#include "TinyFSM/Mario.cpp"
-#define MAX_NODE_NUM 50
+
+#define MAX_NODE_NUM 100
 
 /*
  if root==nullptr ,treeHeight=0;
@@ -20,14 +17,14 @@
 */
 void printTree(int treeHeight = 3) {}
 
-int main_1(int argc, const char *argv[]) {
+int main(int argc, const char *argv[]) {
   auto *m_tree = new RBTree<int>();
   // BSNode<int> node(0);
   unordered_set<int> m_set;
   unordered_set<int>::iterator iter;
   srand((int)time(nullptr));
   int num;
-  
+
   int count = 0;
   while (m_set.size() < MAX_NODE_NUM) {
     // [0,MAX_NODE_NUM)
@@ -43,11 +40,15 @@ int main_1(int argc, const char *argv[]) {
     }
     count++;
   }
+  m_tree->levelOrder();
   return 0;
 }
-
-int main() {
-  Mario mario;
-  mario.init();
+int main_1() {
+  auto *m_tree = new RBTree<int>();
+  for (int i = 0; i < MAX_NODE_NUM; i++) {
+    int val = MAX_NODE_NUM - i;
+    m_tree->insert(val);
+  }
+  m_tree->levelOrder();
   return 0;
 }
