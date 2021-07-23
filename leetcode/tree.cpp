@@ -1,6 +1,28 @@
 #include "../etc/utils.h"
 
-/*
+/*=======================================================================================
+  leetcode 99. Recover Binary Search Tree
+  BST中2个节点位置颠倒，找出并恢复
+              3                          2
+            /  \                       /  \
+          1      4     =====>         1    4
+               /                         /
+              2                         3
+*/
+void recoverTree(TreeNode *root) {}
+
+void code99() {
+  TreeNode *root = new TreeNode(3);
+
+  TreeNode *a = new TreeNode(1);
+  TreeNode *b = new TreeNode(2);
+  TreeNode *c = new TreeNode(4);
+  root->left = a;
+  root->right = c;
+  c->left = b;
+  recoverTree(root);
+}
+/*=======================================================================================
   leetcode 105. Construct Binary Tree from Preorder and Inorder Traversal
   根据前序遍历与中序遍历重建二叉树
   preorder  = [9, 6, 4, 1, 2, 8, 11, 12, 7]
@@ -53,7 +75,7 @@ void code105() {
   vector<int> in = {1, 2, 3, 4};
   buildTreePre(pre, in);
 }
-/*
+/*=======================================================================================
     leetcode106. Construct Binary Tree from Inorder and Postorder Traversal
     根据后序遍历与中序遍历重建二叉树
     inorder   = [1, 4, 2, 6, 8,9(r), 12, 11, 7]         [1,4,2,6,8] r [12,11,7]~
@@ -82,7 +104,7 @@ void code106() {
   TreeNode *root = buildTree(in, post);
   cout << "";
 }
-/*
+/*=======================================================================================
   leetcode 572.Subtree of Another Tree
   验证一棵二叉树是否是另一棵数的子树
 
@@ -101,7 +123,7 @@ bool isSubtree(TreeNode *root, TreeNode *subRoot) {
 }
 
 void code572() {}
-
+//=======================================================================================
 int main() {
   vector<int> a(100, 3);
   vector<int> b(a.end(), a.end());
