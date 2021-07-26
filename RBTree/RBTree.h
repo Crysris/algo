@@ -60,7 +60,7 @@ class RBTree {
 
   void remove(RBNode<T> *&root, RBNode<T> *node);
   // 删除修正函数
-  void removeFixUp(RBNode<T> *&root, RBNode<T> *node, RBNode<T> *parent);
+  void removeFixUp(RBNode<T> *&root, RBNode<T> *node, RBNode<T> *father_node);
   // 回以tree为根节点的红黑树的高
   int getHeight(RBNode<T> *tree) const;
 
@@ -69,7 +69,7 @@ class RBTree {
   void postOrder(RBNode<T> *tree) const;
   void levelOrder(RBNode<T> *tree) const;
   void print(RBNode<T> *tree);
-  void destory(RBNode<T> *tree);
+  void destory(RBNode<T> *&tree);
 
   //#define setColor(node, c) (n->color = c)
 };
