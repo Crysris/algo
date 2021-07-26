@@ -13,6 +13,23 @@ RBTree<T>::RBTree(T k, RBTCOLOR c) {
 }
 
 template <class T>
+RBTree<T>::~RBTree() {
+  destory();
+}
+template <class T>
+void RBTree<T>::destory() {
+  destory(mRoot);
+}
+template <class T>
+void RBTree<T>::destory(RBNode<T>*& tree) {
+  if (tree == nullptr) return;
+  if (tree->left != nullptr) destory(tree->left);
+  if (tree->right != nullptr) destory(tree->right);
+  delete tree;
+  // tree = nullptr;
+}
+
+template <class T>
 void RBTree<T>::insert(T k) {
   /*==============================    情景1   ==============================
   树为空，将插入节点置为根节点
@@ -177,6 +194,90 @@ void RBTree<T>::insertFixUp(RBNode<T>*& root, RBNode<T>* node) {
     如果当前节点为根节点，则直接置为黑色
   */
   root->color = RB_BLACK;
+}
+
+template <class T>
+void RBTree<T>::remove(T k) {
+  RBNode<T>* node = iterativeSearch(k);
+  if (node == nullptr) {
+    cout << "Noexistent node!" << endl;
+    return;
+  }
+  remove(mRoot, node);
+}
+
+template <class T>
+void RBTree<T>::remove(RBNode<T>*& root, RBNode<T>* node) {
+  RBNode<T>* replace;
+
+  if (node->left != nullptr && node->right != nullptr) {
+  }
+}
+template <class T>
+void RBTree<T>::removeFixUp(RBNode<T>*& root, RBNode<T>* node,
+                            RBNode<T>* father_node) {}
+
+template <class T>
+T RBTree<T>::minimun() {
+  RBNode<T>* most_left_node = minimun(mRoot);
+  return most_left_node->key;
+}
+
+template <class T>
+T RBTree<T>::maximun() {
+  RBNode<T>* most_right_node = maximun(mRoot);
+  return most_right_node->key;
+}
+
+template <class T>
+RBNode<T>* RBTree<T>::maximun(RBNode<T>* tree) {
+  if (tree == nullptr) return nullptr;
+  while (tree->right != nullptr) tree = tree->right;
+  return tree;
+}
+template <class T>
+RBNode<T>* RBTree<T>::minimun(RBNode<T>* tree) {
+  if (tree == nullptr) return nullptr;
+  while (tree->left != nullptr) tree = tree->left;
+  return tree;
+}
+
+template <class T>
+RBNode<T>* RBTree<T>::successor(RBNode<T>* node) {
+  if (node == nullptr) return nullptr;
+  /*
+      如果node有右子节点，則后继节点即为右孩子中最小的节点
+  */
+  if (node->right != nullptr) return minimun(node->right);
+  /*
+      若node没有右子节点，则后继节点为“最低的父节点”，而且node在这个父节点的左子树上
+  */
+  if (node->parent == nullptr) return nullptr;
+  RBNode<T>* father_node = node->parent;
+  while (father_node != nullptr && father_node->left == node) {
+    node = father_node;
+    father_node = father_node->parent;
+  }
+  return father_node;
+}
+
+template <class T>
+RBNode<T>* RBTree<T>::predecessor(RBNode<T>* node) {
+  if (node == nullptr) return nullptr;
+  /*
+      如果node有左子节点，則前驱节点即为左孩子中最大的节点
+  */
+  if (node->left != nullptr) return maximun(node->left);
+  /*
+      若node没有左子节点，则前驱节点为“最低的父节点”，而且node在这个父节点的右子树上
+  */
+  if (node->parent == nullptr) return nullptr;
+  RBNode<T>* father_node = node->parent;
+  while (father_node != nullptr && father_node->left == node) {
+    node = father_node;
+    father_node = father_node->parent;
+  }
+  return father_node;
 }
 
 /*

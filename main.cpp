@@ -7,7 +7,7 @@
 
 #include "RBTree/RBTree.cpp"
 
-#define MAX_NODE_NUM 100
+#define MAX_NODE_NUM 20
 
 /*
  if root==nullptr ,treeHeight=0;
@@ -41,6 +41,7 @@ int main(int argc, const char *argv[]) {
     count++;
   }
   m_tree->levelOrder();
+  delete m_tree;
   return 0;
 }
 int main_1() {
