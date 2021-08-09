@@ -106,6 +106,33 @@ void code15()
 {
 }
 
+
+/*
+    欧拉线性筛法求素数个数
+    将合数分解为 最小质因子*另一个数
+    根据最小质因子来决定一个数有没有被筛过
+*/
+
+int primeNumber(int n){
+    vector<int>prime(n+1,0);
+    vector<bool>mark(n+1,false);
+    int primeNum=0;
+    for(int i=2;i<=n;i++){
+        if(mark[i]==false){
+            // 标记素数
+            prime[primeNum++]=i;
+        }
+        for(int j=0;j<primeNum;j++){
+            if(i*prime[j]>n)break;
+            mark[i*prime[j]]=true;
+            if(i%prime[j]==0)break;
+        }
+    }
+    return primeNum;
+}
+void codeEuler(){
+    cout<<primeNumber(10);
+}
 int main()
 {
     // int a = 101, b = 2;
@@ -120,9 +147,10 @@ int main()
     // for (int i = 0; i < 20; i++) {
     //   // iter = index.find(i);
     //   if (index.find(i) == index.end()) index[i] = 2 * i + 3;
-    // }
+    // }      
     // for (auto p : index) {
     //   cout << p.first << " " << p.second << endl;
     // }
+    codeEuler();
     return 0;
 }

@@ -148,7 +148,7 @@ void code5() {
     可以用memset初始化 int数组值为0，-1，不要赋具体的值
 */
 /*
-    最长公共子字符串 Longest Common Subsequence
+    最长公共子字符串 Longest Common substring
     枚举子字符串的起点与终点
     n==m
 */
@@ -203,7 +203,7 @@ int length_LCS_1(string s1, string s2) {
 }
 
 /*
-    最长公共子字符串 Longest Common Subsequence LCS
+    最长公共子字符串 Longest Common SubString LCS
     枚举子字符串的起点与终点
     dp[i][j]表示 以s1[i]与s2[j]结尾的最长公共子串的长度
 
@@ -276,6 +276,57 @@ void code22() {
   }
 }
 
+/*
+    最长递增子字符串 Longest Increasing SubString LIS
+    
+    枚举子串终点
+    l
+*/
+int lengthOfLIS(string s){
+  int n=s.length();
+  int ans=1;
+  for(int i=1;i<n;i++){
+    int j=i,tempMax=1;
+    while(j>=1){
+      if(s[j-1]<s[j]){
+        tempMax++;
+        j--;
+      }
+      else break;
+    }
+    if(tempMax>ans){
+      ans=tempMax;
+    }
+  }
+  
+  return ans;
+}
+string LIS(string s){
+  int n=s.length();
+  int ans=1;
+  int endPos=0;
+  for(int i=1;i<n;i++){
+    int j=i,tempMax=1;
+    while(j>=1){
+      if(s[j-1]<s[j]){
+        tempMax++;
+        j--;
+      }
+      else break;
+    }
+    if(tempMax>ans){
+      ans=tempMax;
+      endPos=i;
+    }
+  }
+  return s.substr(endPos-ans+1,ans);
+}
+void codeLIS(){
+  string ans=LIS("12345678901234567890");
+  cout << ans<<endl;
+}
+
+
 //=======================================================================================
 /*
     最长公共子序列 Largest Common SubSequence
@@ -344,6 +395,6 @@ void code62() { uniquePaths(8, 8); }
 int main() {
   // writeLCSAnswerToTxt();
   //   code22();
-  code22();
+  codeLIS();
   return 0;
 }
