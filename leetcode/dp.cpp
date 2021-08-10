@@ -391,6 +391,50 @@ int uniquePaths(int m, int n) {
 }
 void code62() { uniquePaths(8, 8); }
 
+
+/*=======================================================================================
+     leetcode542. 01 Matrix
+*/
+vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+  int m=mat.size();
+  int n=mat[0].size();
+  int maxDis=m+n-1;
+  int dir[4][2]={{-1,0},{1,0},{0,1},{0,-1}};
+  vector<vector<int>>ans(m,vector<int>(n,maxDis));
+  for(int i=0;i<m;i++)
+    for(int j=0;j<n;j++)
+      if(mat[i][j]==0)
+        ans[i][j]=0;
+  int posX,posY;
+  for(int i=0;i<m;i++){
+    for(int j=0;j<n;j++){
+      for(int k=0;k<4;k++){
+        posX=i+dir[k][0];
+        posY=j+dir[k][1];
+        if(posX>=0&&posX<m&&posY>=0&&posY<n)
+          if(ans[i][j]>ans[posX][posY]+1)
+            ans[i][j]=ans[posX][posY]+1;
+        
+      }
+    }
+  }
+  for(int i=m-1;i>=0;i--){
+    for(int j=n-1;j>=0;j--){
+      for(int k=0;k<4;k++){
+        posX=i+dir[k][0];
+        posY=j+dir[k][1];
+        if(posX>=0&&posX<m&&posY>=0&&posY<n)
+          if(ans[i][j]>ans[posX][posY]+1)
+            ans[i][j]=ans[posX][posY]+1;
+        
+      }
+    }
+  }
+  return ans;
+}
+void code52(){
+
+}
 //=======================================================================================
 int main() {
   // writeLCSAnswerToTxt();

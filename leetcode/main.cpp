@@ -19,7 +19,9 @@ void swap(int *&p, int *&q)
     p = q;
     q = temp;
 }
-
+/*=======================================================================================
+     leetcode1. two sums
+*/
 vector<pair<int, int>> twoSums(vector<int> &nums, int target)
 {
     vector<pair<int, int>> ans;
@@ -97,7 +99,9 @@ void code1()
         cout << p << " ";
     }
 }
-
+/*=======================================================================================
+     leetcode15. three sums
+*/
 vector<vector<int>> threeSum(vector<int> &nums)
 {
     vector<vector<int>> ans;
@@ -105,8 +109,23 @@ vector<vector<int>> threeSum(vector<int> &nums)
 void code15()
 {
 }
+/*=======================================================================================
+     leetcode41. firstMissingPositive
+*/
+int firstMissingPositive(vector<int>& nums) {
+    int MAX_SIZE=5e+5;
+    vector<bool>mark(MAX_SIZE+1,false);
+    for(auto p:nums){
+        if(p<=MAX_SIZE&&p>0)mark[p]=true;
+    }
+    for(int i=1;i<=MAX_SIZE;i++){
+        if(mark[i]==false)return i;
+    }
+    return MAX_SIZE+1;
+}
+void code41(){
 
-
+}
 /*
     欧拉线性筛法求素数个数
     将合数分解为 最小质因子*另一个数
@@ -133,6 +152,55 @@ int primeNumber(int n){
 void codeEuler(){
     cout<<primeNumber(10);
 }
+/*=======================================================================================
+     leetcode448. Find All Numbers Disappeared in an Array
+*/
+// time:0(n) ,space:0(n)
+vector<int> findDisappearedNumbers_2(vector<int>& nums) {
+    int n=nums.size();
+    vector<int>mark(n+1,0);
+    vector<int>ans;
+    for(auto p:nums){
+        mark[p]=1;
+    }
+    for(int i=1;i<=n;i++){
+        if(mark[i]==0)
+            ans.push_back(i);
+    }
+    return ans;
+}
+// time:0(nlog(n)) ,space:0(1)
+vector<int> findDisappearedNumbers_1(vector<int>& nums) {
+    int n=nums.size();
+    vector<int>ans;
+    sort(nums.begin(),nums.end());
+    int i=1,j=1;
+    if(nums[0]>1){
+        for(int k=1;k<nums[0];k++){
+            ans.push_back(k);
+        }
+    }
+    while(i<n){
+        if(nums[i]==nums[i-1]){
+            i++;
+        }
+        else{
+            
+        }
+    }
+    return ans;
+}
+vector<int> findDisappearedNumbers(vector<int>& nums) {
+    int ans=0;
+    for(auto p:nums){
+
+    }
+}
+void code448(){
+    vector<int>a={1,2,3,3,2};
+    findDisappearedNumbers_1(a);
+}
+
 int main()
 {
     // int a = 101, b = 2;
@@ -151,6 +219,6 @@ int main()
     // for (auto p : index) {
     //   cout << p.first << " " << p.second << endl;
     // }
-    codeEuler();
+    code448();
     return 0;
 }
