@@ -152,6 +152,31 @@ int primeNumber(int n){
 void codeEuler(){
     cout<<primeNumber(10);
 }
+
+
+
+/*=======================================================================================
+     leetcode442. Find All Duplicates in an Array
+     每个数字出现1或2次，负号标记法 !!!!!!!!!!!
+*/
+vector<int> findDuplicates(vector<int>& nums) {
+    vector<int>ans;
+    int abs_p;
+    for(auto p:nums){
+        abs_p=abs(p);
+        if(nums[abs_p-1]<0)
+            ans.push_back(abs_p);
+        else
+            nums[abs_p-1]*=-1;
+    }    
+    
+    return ans;
+}
+void code442(){
+    vector<int> a={2,3,5,2,3,5,6,7,8,7,6,1,10,12,1};
+    findDuplicates(a);
+}
+
 /*=======================================================================================
      leetcode448. Find All Numbers Disappeared in an Array
 */
@@ -185,7 +210,7 @@ vector<int> findDisappearedNumbers_1(vector<int>& nums) {
             i++;
         }
         else{
-            
+            if()
         }
     }
     return ans;
@@ -219,6 +244,6 @@ int main()
     // for (auto p : index) {
     //   cout << p.first << " " << p.second << endl;
     // }
-    code448();
+    code442();
     return 0;
 }
