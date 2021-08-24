@@ -19,9 +19,15 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+#include <queue>
 using namespace std;
 
 #define ARRAY_SIZE 1000
+struct ListNode {
+  int val;
+  ListNode *next;
+  ListNode(int x) : val(x), next(NULL) {}
+};
 #define LIST_NODE_NUMBER 100
 struct TreeNode {
   int val;

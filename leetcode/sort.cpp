@@ -5,6 +5,8 @@
     划分 点
     a[0],a[1]...a[p-1],a[p],a[p+1]....a[len-1]
     if i<p,a[i]<[p]
+
+    j左边的数都比array[j]小
 */
 int partition(vector<int> &array, int lo, int hi) {
   int j = lo - 1;

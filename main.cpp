@@ -10,7 +10,7 @@
 #define MAX_NODE_NUM 20
 
 /*
- if root==nullptr ,treeHeight=0;
+ if root==nullptr ,treeHight=0;
  每一层节点数目： 1,2,4,8.....  ，第k层：2^(k-1)
  每一层启始坐标：......8,4,2,1  ，第k层，2^(n-k)
 

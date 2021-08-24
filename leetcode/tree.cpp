@@ -1,5 +1,111 @@
 #include "../etc/utils.h"
 
+
+template <class T>
+void clearQueue(queue<T>& q) {
+	queue<T> empty;
+	swap(empty, q);
+}
+
+template <class T>
+class LeetCodeTree{
+public:
+  TreeNode *root;
+  int size;
+  LeetCodeTree(){
+    this->root=nullptr;
+    this->size=0;
+  }
+  void print(){
+    cout<<"size : "<<size<<endl;
+    inOrder(root);
+  }
+  void inOrder(TreeNode *node){
+    if (node == nullptr) return;
+      inOrder(node->left);
+      cout << node->val << " ";
+      inOrder(node->right);
+  }
+  void insertByLevelNodes(vector<T> levelPrint){
+    
+    int n=levelPrint.size();
+    if(n==0)return ;
+    root=new TreeNode(levelPrint[0]);
+    size=1;
+    int numOfCurLevel=2;
+    int count=1;
+    int preStart=0,preEnd=0,curStart=1,curEnd=2;
+    queue<TreeNode*>preNodes;
+    queue<TreeNode*>curNodes;
+    curNodes.push(root);
+    while(curStart<n){
+      preNodes=curNodes;
+      clearQueue(curNodes);
+      TreeNode *fatherNode;
+      TreeNode *node;      
+      int leftOrRight=0;
+      for(int i=curStart;i<=curEnd;i++){
+        fatherNode=preNodes.front();
+        node=nullptr;
+        if(levelPrint[i]!=0){
+          size++;
+          node=new TreeNode(levelPrint[i]);
+          curNodes.push(node);
+        }
+        if(leftOrRight==0){
+          fatherNode->left=node;
+          leftOrRight=1;
+        }
+        else{
+          fatherNode->right=node;
+          leftOrRight=0;
+          preNodes.pop();
+        }
+      }
+      numOfCurLevel=2*curNodes.size();
+      preStart=curStart;
+      preEnd=curEnd;
+      curStart=curEnd+1;
+      curEnd=curEnd+numOfCurLevel;
+    }
+  }
+  void dfs(){
+    int ans=INT32_MIN;
+    dfs(root,root,ans);
+
+    cout<<ans<<endl;
+  }
+  int dfs(TreeNode *node,int &ans){
+    if(node->left==nullptr&&node->right==nullptr){
+      if(ans<node->val)ans=node->val;
+      return node->val;
+    }
+    int leftMax=0;
+    int rightMax=0;
+    int curMax=node->val;
+    if(node->left!=nullptr)leftMax=dfs(node->left,ans);
+    if(node->right!=nullptr)rightMax=dfs(node->right,ans);
+    if(leftMax+rightMax+node->val>ans){
+      ans=leftMax+rightMax+node->val;
+    }
+    if(leftMax+node->val>curMax)curMax=leftMax+node->val;
+    if(rightMax+node->val>curMax)curMax=rightMax+node->val;
+    
+    if(ans<curMax)ans=curMax;
+    return curMax;
+  }
+
+};
+
+void solve(){
+  LeetCodeTree<int> m_tree;
+  vector<int>levelPrint= {-10,9,20,0,0,15,7};
+  m_tree.insertByLevelNodes(levelPrint);
+  m_tree.dfs();
+}
+
+
+
 /*=======================================================================================
   leetcode 99. Recover Binary Search Tree
   BST中2个节点位置颠倒，找出并恢复
@@ -76,7 +182,7 @@ void code105() {
   buildTreePre(pre, in);
 }
 /*=======================================================================================
-    leetcode106. Construct Binary Tree from Inorder and Postorder Traversal
+    leetcode107. Construct Binary Tree from Inorder and Postorder Traversal
     根据后序遍历与中序遍历重建二叉树
     inorder   = [1, 4, 2, 6, 8,9(r), 12, 11, 7]         [1,4,2,6,8] r [12,11,7]~
     postorder = [1, 2, 4, 8, 6(p), 12, 7, 11, 9(r)]     [1,2,4,8,6] r [12,7,11]
@@ -98,12 +204,90 @@ TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
   root->right = buildTree(inr, postr);
   return root;
 }
-void code106() {
+void code107() {
   vector<int> in = {1, 4, 2, 6, 8, 9, 12, 11, 7};
   vector<int> post = {1, 2, 4, 8, 6, 12, 7, 11, 9};
   TreeNode *root = buildTree(in, post);
   cout << "";
 }
+
+/*=======================================================================================
+    leetcode106. Binary Tree Maximum Path Sum
+    
+
+*/
+
+int dfs(TreeNode *node,int &ans){
+  if(node->left==nullptr&&node->right==nullptr){
+    if(ans<node->val)ans=node->val;
+    return node->val;
+  }
+  int leftMax=0;
+  int rightMax=0;
+  int curMax=node->val;
+  if(node->left!=nullptr)leftMax=dfs(node->left,ans);
+  if(node->right!=nullptr)rightMax=dfs(node->right,ans);
+  if(leftMax+rightMax+node->val>ans){
+    ans=leftMax+rightMax+node->val;
+  }
+  if(leftMax+node->val>curMax)curMax=leftMax+node->val;
+  if(rightMax+node->val>curMax)curMax=rightMax+node->val;
+  
+  if(ans<curMax)ans=curMax;
+  return curMax;
+}
+int maxPathSum(TreeNode* root) {
+  int ans=INT32_MIN;
+  dfs(root,ans);
+  return ans;
+}
+
+void code106(){
+}
+
+
+/*=======================================================================================
+  leetcode 112  Path Sum
+  路径和等于指定值
+
+*/
+int pathSum(TreeNode *node){
+  
+}
+bool hasPathSum(TreeNode* root, int targetSum) {
+  if(root==nullptr)return false;
+  if(targetSum==root->val&&root->left==nullptr&&root->right==nullptr)return true;
+  targetSum=targetSum-root->val;
+  return hasPathSum(root->left,targetSum)||hasPathSum(root->right,targetSum);
+}
+void code112(){
+
+}
+
+
+/*=======================================================================================
+  leetcode 129. Sum Root to Leaf Numbers
+
+  根到所有叶子的路径和
+
+*/
+void dfs(TreeNode* node,int pathNum,int &ans){
+  if(node==nullptr)return ;
+  pathNum=pathNum*10+node->val;
+  if(node->left==nullptr&&node->right==nullptr){
+    ans+=pathNum;
+    return;
+  }
+  dfs(node->left,pathNum,ans);
+  dfs(node->right,pathNum,ans);
+}
+int sumNumbers(TreeNode* root) {
+  int ans=0;
+  dfs(root,0,ans);
+  return ans;
+}
+//=======================================================================================
+
 /*=======================================================================================
   leetcode 572.Subtree of Another Tree
   验证一棵二叉树是否是另一棵数的子树
@@ -123,9 +307,9 @@ bool isSubtree(TreeNode *root, TreeNode *subRoot) {
 }
 
 void code572() {}
+
 //=======================================================================================
+
 int main() {
-  vector<int> a(100, 3);
-  vector<int> b(a.end(), a.end());
-  code106();
+  solve();
 }
