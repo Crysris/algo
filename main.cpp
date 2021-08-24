@@ -19,7 +19,6 @@
 
 */
 void printTree(int treeHeight = 3) {}
-
 int main_1(int argc, const char *argv[]) {
   auto *m_tree = new RBTree<int>();
   // BSNode<int> node(0);

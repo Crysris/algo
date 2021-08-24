@@ -4,7 +4,7 @@
 
 #include "BSNode.h"
 
-#include "../etc/util.h"
+#include "../etc/utils.h"
 
 template <class T>
 BSNode<T>::BSNode(T k) {
