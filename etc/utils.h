@@ -23,11 +23,7 @@
 using namespace std;
 
 #define ARRAY_SIZE 1000
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode(int x) : val(x), next(NULL) {}
-};
+
 #define LIST_NODE_NUMBER 100
 struct TreeNode {
   int val;
@@ -46,6 +42,22 @@ struct ListNode {
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+vector<int> randomNone0Array(){
+    vector<int> array;
+    srand(time(nullptr));
+    int MAX_SIZE=30;
+    int MAX_VALUE=10;
+    int plus_minus;
+    int value;
+    for(int i=0;i<MAX_SIZE;i++){
+        value=rand()%MAX_VALUE+1;//[1,10]
+        if(value&1)plus_minus=1;
+        else plus_minus=-1;
+        value*=plus_minus;
+        array.push_back(value);
+    }
+    return array;
+}
 void printVector(vector<int> array) {
   for (auto p : array) {
     cout << p << " ";

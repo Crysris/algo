@@ -1,17 +1,4 @@
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-#include <map>
-#include <set>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-using namespace std;
+#include "../etc/utils.h"
 
 void swap(int *&p, int *&q)
 {
@@ -99,6 +86,38 @@ void code1()
         cout << p << " ";
     }
 }
+
+/*=======================================================================================
+     leetcode10. Regular Expression Matching
+*/
+bool isMatch(string s, string p) {
+	stack<char> regex_stack;
+	int i=0,j=0;
+	char pre_char;
+	int n=s.size(),m=p.size();
+	while(true){
+		if(p[j]=='.'){
+
+		}
+		else if(p[j]=='*'){
+
+		}
+		else{
+			if(s[i]!=p[j])return false;
+			i++;
+			j++;
+		}
+		pre_char=p[j];
+		
+	}
+}
+
+void code10(){
+	isMatch("aaabbabaa","a*b*.b*a*");
+}
+
+
+
 /*=======================================================================================
      leetcode15. three sums
 */
@@ -210,7 +229,7 @@ vector<int> findDisappearedNumbers_1(vector<int>& nums) {
             i++;
         }
         else{
-            if()
+            // if()
         }
     }
     return ans;
@@ -225,6 +244,28 @@ void code448(){
     vector<int>a={1,2,3,3,2};
     findDisappearedNumbers_1(a);
 }
+
+int partition(vector<int> &nums,int lo,int hi){
+	int j=lo-1;
+	while(lo<hi){
+		if(nums[lo]<=nums[hi]){
+			j++;
+			swap(nums[j],nums[lo]);
+		}
+		lo++;
+	}
+	j++;
+	swap(nums[j],nums[hi]);
+	return j;
+}
+void quickSort(vector<int> &nums,int lo,int hi){
+	if(lo>=hi)return ;
+	int p=partition(nums,lo,hi);
+	quickSort(nums,lo,p-1);
+	quickSort(nums,p+1,hi);
+}
+
+
 
 int main()
 {
@@ -244,6 +285,8 @@ int main()
     // for (auto p : index) {
     //   cout << p.first << " " << p.second << endl;
     // }
-    code442();
+    // code442();
+    vector<int> a={3,9,6,3,7,8,4,1,7,2,5,8};
+    quickSort(a,0,a.size()-1);
     return 0;
 }
