@@ -553,6 +553,28 @@ void maxSubArray(){
     int ans=maxSubArray(array);
     cout<<endl<<ans;
 }
+/*=======================================================================================
+     leetcode410. maxSubRectangle
+     和最大的子矩形
+     先枚举行，在行确定的情况下，
+*/
+int  maxSubRec(vector<vector<int>> nums){
+    int m=nums.size();
+    int n=nums[0].size();
+
+
+    for(int i=0;i<m;i++){
+      for(int j=i;j<m;j++){
+        for(int k=0;k<n;k++){
+          
+        }
+      }
+    }
+    
+}
+void maxSubRec(){
+    
+}
 //=======================================================================================
 int main() {
   // writeLCSAnswerToTxt();
