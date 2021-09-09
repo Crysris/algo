@@ -486,6 +486,31 @@ int splitArray(vector<int>& nums, int m) {
 void code410(){
 
 }
+/*=======================================================================================
+     leetcode410. maxSubArray
+     最大子数组和，dp[i]以nums[i]结尾的最大子数组和
+*/
+int  maxSubArray(vector<int> nums){
+    
+    int n=nums.size();
+    vector<int>dp(n);
+    int ans=INT32_MIN;
+    dp[0]=nums[0];
+    cout<<dp[0]<<"  ";
+    for(int i=1;i<n;i++){
+        dp[i]=nums[i];
+        if(dp[i-1]>0)dp[i]+=dp[i-1];
+        if(ans<dp[i])ans=dp[i];
+        cout<<dp[i]<<"  ";
+    }
+    return ans;
+}
+void maxSubArray(){
+    vector<int> array=randomNone0Array();
+    printVector(array);
+    int ans=maxSubArray(array);
+    cout<<endl<<ans;
+}
 //=======================================================================================
 int main() {
   // writeLCSAnswerToTxt();
