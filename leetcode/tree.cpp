@@ -281,12 +281,34 @@ void dfs(TreeNode* node,int pathNum,int &ans){
   dfs(node->left,pathNum,ans);
   dfs(node->right,pathNum,ans);
 }
-int sumNumbers(TreeNode* root) {
+int sumNumbers(TreeNode*   root) {
   int ans=0;
   dfs(root,0,ans);
   return ans;
 }
 //=======================================================================================
+
+
+/*=======================================================================================
+  leetcode 437. Path Sum III
+
+
+*/
+void dfs(TreeNode* node,int &ans,int targetSum){
+  if(node->val==targetSum){
+    ans++;
+    return;
+  }
+  targetSum-=node->val;
+  if(node->left)dfs(node->left,ans,targetSum);
+  if(node->right)dfs(node->right,ans,targetSum);
+}
+
+int pathSum(TreeNode* root, int targetSum) {
+  int ans=0;
+  dfs()
+}
+
 
 /*=======================================================================================
   leetcode 572.Subtree of Another Tree

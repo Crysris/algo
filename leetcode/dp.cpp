@@ -364,7 +364,7 @@ int longestValidParentheses(string s) {
         if(brac_stack.empty())break;
         subMax+=2;
         brac_stack.pop();
-        if(subMax
+        
       }
       else{
         brac_stack.push(c);
@@ -381,6 +381,48 @@ void code32(){
 }
 //=======================================================================================
 
+
+
+int maxRectangle(vector<vector<int>> int_map)
+{
+  int m=int_map.size();
+  int n=int_map[0].size();
+
+  vector<vector<int>> dp(m,vector<int>(n,0));
+  for(int i=0;i<m;i++){
+    for(int j=0;j<n;j++){
+      dp[i][j]=int_map[i][j];
+    }
+  }
+
+
+
+  for(int i=0;i<m;i++){
+
+  }
+}
+
+
+void code_maxRectangle(){
+  srand(time(nullptr));
+  int MAX_NUM=6;// (-10,10)
+
+
+  int map_hei=10;
+  int map_wid=10;
+  int plus_minus;
+  vector<vector<int>> int_map(map_hei,vector<int>(map_wid,0));   // 50*60
+  for(int i=0;i<map_hei;i++){
+    for(int j=0;j<map_wid;j++){
+      plus_minus=rand()%2;
+      if(plus_minus==0)plus_minus=-1;
+      int_map[i][j]=rand()%MAX_NUM*plus_minus;
+      cout<<int_map[i][j]<<" ";
+    }
+    cout<<endl;
+  }
+
+}
 
 /*=======================================================================================
     leetcode152. Maximum Product Subarray
@@ -486,10 +528,35 @@ int splitArray(vector<int>& nums, int m) {
 void code410(){
 
 }
+/*=======================================================================================
+     leetcode410. maxSubArray
+     最大子数组和，dp[i]以nums[i]结尾的最大子数组和
+*/
+int  maxSubArray(vector<int> nums){
+    
+    int n=nums.size();
+    vector<int>dp(n);
+    int ans=INT32_MIN;
+    dp[0]=nums[0];
+    cout<<dp[0]<<"  ";
+    for(int i=1;i<n;i++){
+        dp[i]=nums[i];
+        if(dp[i-1]>0)dp[i]+=dp[i-1];
+        if(ans<dp[i])ans=dp[i];
+        cout<<dp[i]<<"  ";
+    }
+    return ans;
+}
+void maxSubArray(){
+    vector<int> array=randomNone0Array();
+    printVector(array);
+    int ans=maxSubArray(array);
+    cout<<endl<<ans;
+}
 //=======================================================================================
 int main() {
   // writeLCSAnswerToTxt();
   //   code22();
-  code32();
+  code_maxRectangle();
   return 0;
 }
