@@ -379,50 +379,6 @@ void code32(){
   string parenthesis="(())(";
   longestValidParentheses(parenthesis);
 }
-//=======================================================================================
-
-
-
-int maxRectangle(vector<vector<int>> int_map)
-{
-  int m=int_map.size();
-  int n=int_map[0].size();
-
-  vector<vector<int>> dp(m,vector<int>(n,0));
-  for(int i=0;i<m;i++){
-    for(int j=0;j<n;j++){
-      dp[i][j]=int_map[i][j];
-    }
-  }
-
-
-
-  for(int i=0;i<m;i++){
-
-  }
-}
-
-
-void code_maxRectangle(){
-  srand(time(nullptr));
-  int MAX_NUM=6;// (-10,10)
-
-
-  int map_hei=10;
-  int map_wid=10;
-  int plus_minus;
-  vector<vector<int>> int_map(map_hei,vector<int>(map_wid,0));   // 50*60
-  for(int i=0;i<map_hei;i++){
-    for(int j=0;j<map_wid;j++){
-      plus_minus=rand()%2;
-      if(plus_minus==0)plus_minus=-1;
-      int_map[i][j]=rand()%MAX_NUM*plus_minus;
-      cout<<int_map[i][j]<<" ";
-    }
-    cout<<endl;
-  }
-
-}
 
 /*=======================================================================================
     leetcode152. Maximum Product Subarray
@@ -556,29 +512,53 @@ void maxSubArray(){
 /*=======================================================================================
      leetcode410. maxSubRectangle
      和最大的子矩形
-     先枚举行，在行确定的情况下，
+     i为起点行，j为终点行，求出i~j行下，每一列的和即为dp[1],dp[2],dp[3]...dp[n]
 */
 int  maxSubRec(vector<vector<int>> nums){
     int m=nums.size();
     int n=nums[0].size();
-
-
+    vector<int>dp(n,0);
+    int ans=INT32_MIN;
+    int curMaxSum;
     for(int i=0;i<m;i++){
+      // 初始行变化时重置dp
+      fill(dp.begin(),dp.end(),0);
       for(int j=i;j<m;j++){
-        for(int k=0;k<n;k++){
-          
+        //  curMaxSum表示以第i行开始~第j行结束，并以第k列结尾的子矩形最大和
+        curMaxSum=nums[j][0];
+        dp[0]=nums[j][0];
+        cout<<curMaxSum<<" ";
+        for(int k=1;k<n;k++){
+          // 逐列更新每列和dp[k]
+          dp[k]+=nums[j][k];
+          if(curMaxSum>0)curMaxSum=curMaxSum+dp[k];
+          else curMaxSum=dp[k];
+          cout<<curMaxSum<<" ";
+          if(curMaxSum>ans)ans=curMaxSum;
         }
+        cout<<endl;
       }
     }
-    
+    return ans;
 }
 void maxSubRec(){
-    
+    int row=6;
+    int col=5;
+    vector<vector<int>> nums;
+    vector<int>curRow;
+    srand(time(nullptr));
+    for(int i=0;i<row;i++){
+      curRow=randomNone0Array(col);
+      nums.push_back(curRow);
+    }
+    printVectorMatrix(nums,row,col);
+    int ans=maxSubRec(nums);
+    cout<<ans;
 }
 //=======================================================================================
 int main() {
   // writeLCSAnswerToTxt();
   //   code22();
-  code_maxRectangle();
+  maxSubRec();
   return 0;
 }

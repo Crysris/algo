@@ -42,14 +42,11 @@ struct ListNode {
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
-vector<int> randomNone0Array(){
+vector<int> randomNone0Array(int SIZE=30,int MAX_VALUE=10){
     vector<int> array;
-    srand(time(nullptr));
-    int MAX_SIZE=30;
-    int MAX_VALUE=10;
     int plus_minus;
     int value;
-    for(int i=0;i<MAX_SIZE;i++){
+    for(int i=0;i<SIZE;i++){
         value=rand()%MAX_VALUE+1;//[1,10]
         if(value&1)plus_minus=1;
         else plus_minus=-1;
@@ -75,6 +72,15 @@ void printArray(int *array, int n) {
   cout << endl;
 }
 void printMatrix(int **array, int m, int n) {
+  for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << array[i][j] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+}
+void printVectorMatrix(vector<vector<int>> array, int m, int n) {
   for (int i = 0; i < m; i++) {
     for (int j = 0; j < n; j++) {
       cout << array[i][j] << " ";
