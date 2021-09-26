@@ -208,6 +208,34 @@ void code_bitMapNQueen() {
   printStringVectors(ans, n);
 }
 
+/*
+  1000个瓶，1个装有毒，999个装有水，10只小白鼠，无限多试管，找出装有毒药那瓶
+  1024= 1   0  0  0  0  0  0  0  0  0  0
+       [10  9  8  7  6  5  4  3  2  1  0]
+  1000 =0   1  1  1  1  1  0  1  0  0  0
+       [10  9  8  7  6  5  4  3  2  1  0]
+  #####设装有毒药的试管编号为X######
+  轮数ROUND=1 ，每部分瓶子数M=500
+  1.将待测所有瓶子编号，1-1000，并分成2部分 A:1-500，B:501-1000，
+  2.取2支试管A1、B1，分别在A、B中所有瓶中取少量液体加入A1、B1中
+  3.取一只小白鼠用A1进行实验，若小白鼠死亡则用A1进入下一轮,否则用B1进入下一轮
+  4.若M=1，则找出装有毒药的试管
+*/
+
+int findPosion(vector<int>sample){
+  
+}
+
+void codePoison(){
+  vector<int> sample(1001,0);
+  srand(time(nullptr));
+  int X=rand()%1001+1;//[1,1000];
+  sample[X]=1;
+
+}
+
+
+
 int main() {
   /*clock_t startTime = clock();
 
